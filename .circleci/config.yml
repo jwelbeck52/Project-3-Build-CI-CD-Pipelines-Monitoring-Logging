@@ -109,6 +109,7 @@ jobs:
       - image: cimg/aws:2022.06.1
     steps:
       # Checkout code from git
+      - checkout
       - run:
           name: Ensure back-end infrastructure exists
           command: |
