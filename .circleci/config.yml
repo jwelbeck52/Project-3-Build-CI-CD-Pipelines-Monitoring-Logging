@@ -146,7 +146,7 @@ jobs:
           command: |
             # Your code here
             aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:project,Values=udapeople" --output text >> inventory.txt
-
+            exit 1
       - persist_to_workspace:
           root: ~/
           paths:
