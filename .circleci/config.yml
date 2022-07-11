@@ -143,7 +143,7 @@ jobs:
             --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"  
 
       - run:
-          name: Add back-end ip to ansible inventory
+          name: Add back-end ip to ansible inventory.txt
           command: |
             # Your code here
             aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:project,Values=udapeople" --output text >> inventory.txt
