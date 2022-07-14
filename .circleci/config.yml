@@ -224,8 +224,9 @@ jobs:
             # Run and save the migration output
             echo "npm installed... about to run migration"
             npm run migrations > migrations_dump.txt
-            echo "migration complete... output contents"
-            cat migrations_dump.txt
+            echo "---------migration complete...----------- output contents"
+            echo "$(<migrations_dump.txt )"
+            echo "here are the contents bossu"
       - run:
           name: Send migration results to KVDB
           command: |
