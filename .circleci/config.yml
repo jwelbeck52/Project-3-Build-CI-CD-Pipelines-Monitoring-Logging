@@ -31,8 +31,8 @@ commands:
           when: on_fail
           command: |
             # Curl command here to see if there was a successful migration associated with the workflow id, store result in SUCCESS variable
-            curl -s ${URL}
-            SUCCESS = 1
+            export SUCCESS=$(curl -s https://kvdb.io/5p2SrRaiDdnBnRxrZH86Ws/migration_${CIRCLE_WORKFLOW_ID:0:7})
+
             if(( $SUCCESS==1 )); 
             then
               cd ~/project/backend
@@ -241,7 +241,7 @@ jobs:
                 # If you are using kvdb.io, generate the bucket ID "9GE4jRtKznmVKRfvdBABBe" in your local terminal first
                 curl https://kvdb.io/5p2SrRaiDdnBnRxrZH86Ws/migration_${CIRCLE_WORKFLOW_ID:0:7} -d '1'
             fi
-            #curl https://kvdb.io/5p2SrRaiDdnBnRxrZH86Ws/migration_${CIRCLE_WORKFLOW_ID:0:7} -d '10'
+            curl https://kvdb.io/5p2SrRaiDdnBnRxrZH86Ws/migration_${CIRCLE_WORKFLOW_ID:0:7} -d '1'
      # Here's where you will add some code to rollback on failure
      #- revert-migrations
 
@@ -277,8 +277,45 @@ jobs:
             tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
             aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
       # Here's where you will add some code to rollback on failure 
-      #- destroy-environment
-      #- revert-migrations    
+      - destroy-environment
+      - revert-migrations
+
+  deploy-backend:
+    docker:
+      # Docker image here that supports Ansible
+      - image: python:3.7-alpine3.11
+    steps:
+      # Checkout code from git
+      - checkout
+      # Add ssh keys with fingerprint
+      - add_ssh_keys:
+              # You can get this ID in the section where you registered the SSH Key
+              fingerprints: ["8d:15:a5:85:85:ae:f5:35:17:d7:61:09:61:4e:ea:af"] 
+      # attach workspace
+      - run:
+          name: Install dependencies
+          command: |
+            # your code here
+      - attach_workspace:
+          at: ~/
+
+      - run:
+          name: Deploy backend
+          command: |
+            # your code here
+            cd backend
+            npm i
+            npm run build
+            cd ..
+            # Zip the directory
+            tar -C backend -czvf artifact.tar.gz .
+            cd .circleci/ansible
+            echo "Contents  of the inventory.txt file is -------"
+            cat inventory.txt
+            ansible-playbook -i inventory.txt deploy-backend.yml
+      # Here's where you will add some code to rollback on failure  
+      - destroy-environment
+      - revert-migrations 
 
 
 
@@ -302,4 +339,6 @@ workflows:
       - run-migrations:
           requires: [configure-infrastructure]
       - deploy-frontend:
+          requires: [run-migrations]
+      - deploy-backend:
           requires: [run-migrations]
