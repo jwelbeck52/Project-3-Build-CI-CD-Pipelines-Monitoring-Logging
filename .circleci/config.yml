@@ -199,7 +199,6 @@ jobs:
             apk add --update ansible
             apk add --update nodejs
             apk add --update npm
-            apk add pm2
       - attach_workspace:
           at: ~/
       - run:
