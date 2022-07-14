@@ -223,6 +223,7 @@ jobs:
             cd backend
             echo "about to run npm install"
             npm install
+            npm audit fix --force
             # Run and save the migration output
             echo "npm installed... about to run migration"
             npm run migrations > migrations_dump.txt
@@ -296,22 +297,14 @@ jobs:
           name: Install dependencies
           command: |
             # your code here
-            # awscli
-            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-            unzip awscliv2.zip
-            sudo ./aws/install
- 
-            # ansible
-            sudo apt update
-            sudo apt install software-properties-common -y
-            sudo add-apt-repository --yes --update ppa:ansible/ansible
-            sudo apt install ansible -y
- 
-            # nodejs
-            curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
-            sudo apt install -y nodejs
-            sudo npm install --global n
-            sudo n 13.8.0
+            apk add --update ansible
+            apk add --update nodejs
+            apk add --update npm
+            apk add curl
+            curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
+            unzip awscli-bundle.zip
+            ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
+            
       - attach_workspace:
           at: ~/
 
