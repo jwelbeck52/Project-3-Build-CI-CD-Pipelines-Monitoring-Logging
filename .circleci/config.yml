@@ -197,6 +197,9 @@ jobs:
           name: Install dependencies
           command: |
             apk add --update ansible
+            apk add --update nodejs
+            apk add --update npm
+            apk add pm2
       - attach_workspace:
           at: ~/
       - run:
@@ -321,6 +324,9 @@ jobs:
             echo "Contents  of the inventory.txt file is -------"
             cat inventory.txt
             ansible-playbook -i inventory.txt deploy-backend.yml
+            pm2 stop default
+            pm2 start npm -- start
+
       # Here's where you will add some code to rollback on failure:  
       - destroy-environment
       - revert-migrations 
