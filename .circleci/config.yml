@@ -232,6 +232,7 @@ jobs:
                 #curl -H "Content-Type: text/plain" -H "token: 7933fe63-4687-4fa1-8426-aa25aa1730ec" --request PUT --data "1" https://api.memstash.io/values/migration_${CIRCLE_WORKFLOW_ID:0:7}
                 # If you are using kvdb.io, generate the bucket ID "9GE4jRtKznmVKRfvdBABBe" in your local terminal first
                 curl https://kvdb.io/5p2SrRaiDdnBnRxrZH86Ws/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
+                echo ${CIRCLE_WORKFLOW_ID:0:7}
             fi
      # Here's where you will add some code to rollback on failure
      #- revert-migrations
@@ -254,7 +255,6 @@ jobs:
           command: |
             # your code here
             export BACKEND_IP=$(aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:project,Values=udapeople" --output text)
-            echo $BACKEND_IP
             export API_URL="http://${BACKEND_IP}:3030"
             #echo "API_URL = ${API_URL}"
             echo API_URL="http://${BACKEND_IP}:3030" >> frontend/.env
