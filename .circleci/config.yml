@@ -231,12 +231,15 @@ jobs:
           name: Send migration results to KVDB
           command: |
             # Your code here
+            echo "checking the contents sir"
+            cat ~/project/backend/migrations_dump.txt
+            echo "these are the contents sir"
             if grep -q "has been executed successfully." ~/project/backend/migrations_dump.txt
             then
                 # If you are using kvdb.io, generate the bucket ID "9GE4jRtKznmVKRfvdBABBe" in your local terminal first
                 curl https://kvdb.io/5p2SrRaiDdnBnRxrZH86Ws/migration_${CIRCLE_WORKFLOW_ID:0:7} -d '1'
             fi
-            curl https://kvdb.io/5p2SrRaiDdnBnRxrZH86Ws/migration_${CIRCLE_WORKFLOW_ID:0:7} -d '10'
+            #curl https://kvdb.io/5p2SrRaiDdnBnRxrZH86Ws/migration_${CIRCLE_WORKFLOW_ID:0:7} -d '10'
      # Here's where you will add some code to rollback on failure
      #- revert-migrations
 
