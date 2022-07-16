@@ -298,7 +298,7 @@ jobs:
   deploy-backend:
     docker:
       # Docker image here that supports Ansible
-      - image: python:3.7-alpine3.11
+      - image: python:3.7-alpine3.16
     steps:
       # Checkout code from git
       - checkout
@@ -336,7 +336,7 @@ jobs:
             ansible-playbook -i inventory.txt deploy-backend.yml
 
       # Here's where you will add some code to rollback on failure:  
-      #- destroy-environment
+      - destroy-environment
       - revert-migrations 
 
 
