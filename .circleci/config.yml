@@ -152,6 +152,7 @@ jobs:
       - run:
           name: Run Audit
           command: |
+            cd backend
             npm audit fix --force
             #npm audit --audit-level=critical
 
