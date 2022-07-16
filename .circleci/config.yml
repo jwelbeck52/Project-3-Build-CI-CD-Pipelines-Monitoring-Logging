@@ -226,7 +226,7 @@ jobs:
             # Your code here
             cd backend
             echo "about to run npm install"
-            npm install
+            #npm install
             # Run and save the migration output
             echo "npm installed... about to run migration"
             npm run migrations > migrations_dump.txt
