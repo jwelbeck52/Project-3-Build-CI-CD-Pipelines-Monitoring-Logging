@@ -137,7 +137,7 @@ jobs:
 
   scan-backend:
     docker:
-      - image: circleci/node:13.8.0
+      - image: cimg/node:18.4.0
     steps:
       - checkout
       - restore_cache:
@@ -201,6 +201,9 @@ jobs:
             apk add --update ansible
             apk add --update nodejs
             apk add --update npm
+            curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
+            unzip awscli-bundle.zip
+            ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
       - attach_workspace:
           at: ~/
       - run:
