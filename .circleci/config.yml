@@ -397,7 +397,7 @@ jobs:
   cleanup:
     docker:
       # Docker image here
-      - image: python:3.7-alpine3.16
+      - image: cimg/aws:2022.06.1
     steps:
       # Checkout code from git
       - checkout
