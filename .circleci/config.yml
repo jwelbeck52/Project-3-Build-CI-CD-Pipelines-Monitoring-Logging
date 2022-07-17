@@ -241,7 +241,7 @@ jobs:
             npm run migrations > migrations_dump.txt
             tail migrations_dump.txt
       - run:
-          name: Send migration results to KVDB
+          name: Send migration results to KVDB.IO
           command: |
             # Your code here
             cd backend
