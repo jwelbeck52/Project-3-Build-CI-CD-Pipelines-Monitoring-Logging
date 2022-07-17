@@ -306,13 +306,9 @@ jobs:
           name: Install dependencies
           command: |
             # your code here
-            apk add --update ansible
-            apk add --update nodejs
-            apk add --update npm
-            apk add curl
-            curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
-            unzip awscli-bundle.zip
-            ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
+            apk add --update ansible curl rsync openssh nodejs npm
+            pip install awscli
+            aws --version
 
       - attach_workspace:
           at: ~/
