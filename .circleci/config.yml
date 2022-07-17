@@ -394,7 +394,7 @@ jobs:
       - destroy-environment
       - revert-migrations
 
-cleanup:
+  cleanup:
     docker:
       # Docker image here
       - image: python:3.7-alpine3.16
