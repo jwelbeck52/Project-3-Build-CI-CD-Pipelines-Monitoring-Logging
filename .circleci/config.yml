@@ -236,7 +236,7 @@ jobs:
             # Your code here
             cd backend
             echo "about to run npm install"
-            #npm install --legacy-peer-deps
+            npm install
             # Run and save the migration output
             npm run migrations > migrations_dump.txt
             tail migrations_dump.txt
@@ -251,7 +251,6 @@ jobs:
             then
                 curl https://kvdb.io/P2QF3o1evmGBBGk9pLwvZK/migration_${CIRCLE_WORKFLOW_ID:0:7} -d '1'
             fi
-            npm run migrations:revert
      # Here's where you will add some code to rollback on failure
       - revert-migrations
 
