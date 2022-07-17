@@ -348,14 +348,24 @@ jobs:
       - run:
           name: Backend smoke test.
           command: |
-            # your code here
-            curl "$API_URL/api/status"
+            #check if status is ok
+            if curl "${API_URL}/api/status" | grep "ok"
+            then
+              return 0
+            else
+              return 1
+            fi
       - run:
           name: Frontend smoke test.
           command: |
-            # your code here
-            FRONTEND_URL="http://udapeople-52f0c4d.s3-website-us-east-1.amazonaws.com/"
-            curl -s ${FRONTEND_URL} | grep -q "Welcome"
+            # check if the page contain "Welcome"
+            FRONTEND_URL="http://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3-website-us-east-1.amazonaws.com/"
+            if curl -s ${FRONTEND_URL} | grep "Welcome"
+            then
+              return 0
+            else
+              return 1
+            fi
       # Here's where you will add some code to rollback on failure  
 
 
