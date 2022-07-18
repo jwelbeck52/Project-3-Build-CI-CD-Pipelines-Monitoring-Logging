@@ -389,7 +389,7 @@ jobs:
             WorkflowID=$(aws cloudformation \
             list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
             --no-paginate --output text)
-            curl https://kvdb.io/P2QF3o1evmGBBGk9pLwvZK/oldworkflowid -d $WorkflowID
+            curl https://kvdb.io/P2QF3o1evmGBBGk9pLwvZK/oldworkflowid -d "$WorkflowID"
             echo $WorkflowID
             echo ${WorkflowID:10:17}
       - run:
