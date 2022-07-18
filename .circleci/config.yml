@@ -248,8 +248,13 @@ jobs:
             cd backend
             tail ~/project/backend/migrations_dump.txt
             echo $CIRCLE_WORKFLOW_ID:0:7
-            
+            #check if migration was successful
             if grep -q "has been executed successfully." ~/project/backend/migrations_dump.txt
+            then
+                curl https://kvdb.io/P2QF3o1evmGBBGk9pLwvZK/migration_${CIRCLE_WORKFLOW_ID:0:7} -d '1'
+            fi
+            #check if already migrated
+            if grep -q "No migrations are pending" ~/project/backend/migrations_dump.txt
             then
                 curl https://kvdb.io/P2QF3o1evmGBBGk9pLwvZK/migration_${CIRCLE_WORKFLOW_ID:0:7} -d '1'
             fi
