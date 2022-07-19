@@ -449,7 +449,7 @@ jobs:
 workflows:
   default:
     jobs:
-        #should run for all brancheswass
+        #should run for all branches
       - build-frontend
       - build-backend
       - test-frontend:
