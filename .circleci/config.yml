@@ -7,7 +7,7 @@ commands:
         to:
           type: string
           default: "Udacity params"
-      # Add parameter here   
+      # Add your parameter here   
     steps:
       - run:
           name: Destroy environments
